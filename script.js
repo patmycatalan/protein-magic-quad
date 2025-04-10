@@ -49,19 +49,27 @@ function initChart() {
   const maxEconomy = Math.max(...economyValues);
   const medianEconomy = [...economyValues].sort((a, b) => a - b)[Math.floor(economyValues.length / 2)];
   
-  // Add padding
-  const densityPadding = (maxDensity - minDensity) * 0.1;
-  const economyPadding = (maxEconomy - minEconomy) * 0.1;
-  
-  // Scale functions
+  // Scale functions to make the dividing lines appear at the visual center
   function scaleX(value) {
-    return padding + (chartWidth * (value - (minEconomy - economyPadding)) / 
-                      ((maxEconomy + economyPadding) - (minEconomy - economyPadding)));
+    // Adjust scaling to make median appear in the middle visually
+    if (value <= medianEconomy) {
+      // Scale from min to median to use the first half of the chart
+      return padding + (chartWidth/2) * (value - minEconomy) / (medianEconomy - minEconomy);
+    } else {
+      // Scale from median to max to use the second half of the chart
+      return padding + chartWidth/2 + (chartWidth/2) * (value - medianEconomy) / (maxEconomy - medianEconomy);
+    }
   }
   
   function scaleY(value) {
-    return height - padding - (chartHeight * (value - (minDensity - densityPadding)) / 
-                               ((maxDensity + densityPadding) - (minDensity - densityPadding)));
+    // Adjust scaling to make median appear in the middle visually
+    if (value <= medianDensity) {
+      // For values below median (lower half of chart, which is upper part of SVG)
+      return height - padding - (chartHeight/2) * (value - minDensity) / (medianDensity - minDensity);
+    } else {
+      // For values above median (upper half of chart, which is lower part of SVG)
+      return height - padding - chartHeight/2 - (chartHeight/2) * (value - medianDensity) / (maxDensity - medianDensity);
+    }
   }
   
   // Get quadrant for a data point
@@ -82,7 +90,7 @@ function initChart() {
     "Champions": "Pound for Pound Champs",
     "Protein Warriors": "Finance Bro Fundamentals",
     "Value Leaders": "Functional Fuelers",
-    "Niche Players": "Ego Lifters"
+    "Niche Players": "Swole Survivors"
   };
   
   // Quadrant colors
@@ -168,7 +176,7 @@ function initChart() {
       y: (scaleY(minDensity) + scaleY(medianDensity)) / 2
     },
     { 
-      text: ["EGO", "LIFTERS"],
+      text: ["SWOLE", "SURVIVORS"],
       x: (scaleX(minEconomy) + scaleX(medianEconomy)) / 2,
       y: (scaleY(minDensity) + scaleY(medianDensity)) / 2
     }
