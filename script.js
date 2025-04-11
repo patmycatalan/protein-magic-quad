@@ -89,8 +89,8 @@ function initChart() {
   const quadrantDisplayNames = {
     "Champions": "Pound for Pound Champs",
     "Protein Warriors": "Finance Bro Fundamentals",
-    "Value Leaders": "Functional Fuelers",
-    "Niche Players": "Swole Survivors"
+    "Value Leaders": "Swole Survivors",
+    "Niche Players": "Ego Lifters"
   };
   
   // Quadrant colors
@@ -171,12 +171,12 @@ function initChart() {
       y: (scaleY(maxDensity) + scaleY(medianDensity)) / 2
     },
     { 
-      text: ["FUNCTIONAL", "FUELERS"],
+      text: ["SWOLE", "SURVIVORS"],
       x: (scaleX(maxEconomy) + scaleX(medianEconomy)) / 2,
       y: (scaleY(minDensity) + scaleY(medianDensity)) / 2
     },
     { 
-      text: ["SWOLE", "SURVIVORS"],
+      text: ["EGO", "LIFTERS"],
       x: (scaleX(minEconomy) + scaleX(medianEconomy)) / 2,
       y: (scaleY(minDensity) + scaleY(medianDensity)) / 2
     }
